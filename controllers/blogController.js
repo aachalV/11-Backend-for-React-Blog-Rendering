@@ -17,15 +17,10 @@ const checkIfQuery = (req, res, next) => {
   let blog = blogs.filter((blog) => {
     return Object.keys(req.query).every((property) => {
       let reg = new RegExp(req.query[property], "i");
-      console.log(reg.test(blog[property]));
       return reg.test(blog[property]);
     });
   });
-  // let blog = blogs.filter((blog) => {
-  //   return Object.keys(req.query).every((property) => {
-  //     return blog[property] == req.query[property];
-  //   });
-  // });
+
   sendResponse(200, "Sucessful", blog, req, res);
 };
 //Get All Blogs
@@ -34,7 +29,6 @@ const getAllBlogs = (req, res, next) => {
 };
 //Check Id
 const isIdValid = (req, res, next) => {
-  console.log("Entered IsValid");
   let id = req.params.id;
   let idExists = blogs.some((blog) => {
     return blog.id == id;
@@ -58,13 +52,12 @@ const getBlogById = (req, res, next) => {
   let blog = blogs.find((blog) => {
     return blog.id == id;
   });
-  console.log(blog);
+
   sendResponse(200, "Successfull", blog, req, res);
 };
 
 //middleware
 const verifyPostRequest = (req, res, next) => {
-  console.log(req.body);
   const requiredProperties = [
     "blogAuthor",
     "blogHeader",
@@ -86,7 +79,6 @@ const verifyPostRequest = (req, res, next) => {
 };
 //create blog
 const createBlog = (req, res, next) => {
-  console.log(req.body);
   let newBlog = new Blog(
     req.body.blogAuthor,
     req.body.blogHeader,
